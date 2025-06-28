@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "339336476995",
+    "project_id": "hestek-de018",
+    "storage_bucket": "hestek-de018.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339336476995:android:94de03ef1053c51f6297f6",
+        "android_client_info": {
+          "package_name": "com.example.hestek_v01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyypM1pW4WiuCUW1eLAeVRyBM47LG8TuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339336476995:android:c432dfc10aca71576297f6",
+        "android_client_info": {
+          "package_name": "com.example.hestek_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyypM1pW4WiuCUW1eLAeVRyBM47LG8TuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
