@@ -217,10 +217,10 @@ class _BarraState extends State<Barra> {
             ),
             child: SegmentedButton<String>(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color(0xFFC0D6DF)),
-                side: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(Color(0xFFC0D6DF)),
+                side: WidgetStateProperty.all(
                     BorderSide(color: Color(0xFFC0D6DF), width: 2)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                shape: WidgetStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 )),
               ),
