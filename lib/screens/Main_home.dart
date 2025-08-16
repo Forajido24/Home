@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:modular/widgets/home.dart'; //Pendiente
+import 'package:proyecto/widgets/clima.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,13 +34,7 @@ class Inicio extends StatelessWidget {
         toolbarHeight: 100,
         title: Text("Casa", style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),),
       ),
-      body: Column(children: const [
-        // Replace these with valid widgets or your own implementations
-        SizedBox(height: 20),
-        Icon(Icons.account_circle, size: 60, color: Colors.grey),
-        Text('Clima', style: TextStyle(fontSize: 24)),
-        Divider(),
-      ],),
+      body: Column(children: const [Avatar(), Clima(), Barra()],),
       bottomNavigationBar: BottomAppBar(
       color: Color(0xFFEAEAEA),
       child: Row(
@@ -53,3 +47,6 @@ class Inicio extends StatelessWidget {
     );
   }
 }
+
+
+
