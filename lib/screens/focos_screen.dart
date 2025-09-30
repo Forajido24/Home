@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/widgets/clima.dart';
+import '../widgets/focos.dart'; //Pendiente
 
 void main() {
   runApp(const MyApp());
@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const Inicio(),
+      home: const Focos(),
     );
   }
 }
 
-class Inicio extends StatelessWidget {
-  const Inicio({super.key});
+class Focos extends StatelessWidget {
+  const Focos({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +32,10 @@ class Inicio extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFFEAEAEA),
         toolbarHeight: 100,
-        title: Text("Casa", style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),),
+        title: Text("Cuarto", style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),),
       ),
-      body: Column(children: const [Avatar(), Clima(), Barra()],),
-      bottomNavigationBar: BottomAppBar(
-      color: Color(0xFFEAEAEA),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start, // Alineación a la izquierda
-        children: [
-          Icon(Icons.menu, size: 30, color: Color(0xFF4F6D7A)), // Ícono dentro del BottomAppBar
-        ],
+      body: Column(children: const [Barfocos(), Agregar()],
       ),
-    ),
     );
   }
 }
-
-
-

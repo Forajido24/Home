@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+//import 'home_screen.dart';
+import '../services/auth_service_register.dart';
+//+import '../routes/file_routes.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -9,21 +11,22 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final usernameController = TextEditingController();
+  //final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   void _register() {
-    if (usernameController.text.isNotEmpty &&
+    if (
+      //usernameController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
         passwordController.text.isNotEmpty &&
         confirmPasswordController.text == passwordController.text) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MyHomePage(title: 'Inicio'),
-        ),
+      AuthServiceRegistro.registerUser(
+        context: context,
+        email: emailController.text,
+        pass: passwordController.text,
+
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -72,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               Image.asset('assets/logo.png', height: 120),
               const SizedBox(height: 20),
-              buildTextField(label: 'User', controller: usernameController),
+              //buildTextField(label: 'User', controller: usernameController),
               buildTextField(label: 'Email', controller: emailController),
               buildTextField(
                 label: 'Password',

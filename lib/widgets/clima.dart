@@ -23,7 +23,8 @@ class Avatar extends StatelessWidget {
             ),
           const CircleAvatar(
             radius: 30,
-            backgroundColor: Colors.white,
+            //backgroundColor: Colors.white,
+            backgroundImage: NetworkImage('https://i.pinimg.com/originals/ba/8b/6b/ba8b6b7ef1b0911725f39851b94a1b7d.jpg'),
           ),
         ],
       ),
@@ -163,7 +164,7 @@ class _ClimaState extends State<Clima> {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            const SizedBox(width: 50),
+            const SizedBox(width: 15),
             const Icon(Icons.wb_cloudy,
                 size: 48, color: Color.fromARGB(255, 78, 116, 243)),
             const SizedBox(width: 35),
@@ -181,7 +182,7 @@ class _ClimaState extends State<Clima> {
                 Text(
                   "$descripcion · ${temperatura.toStringAsFixed(1)}°C",
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 10,
                     color: Colors.white70,
                   ),
                 ),

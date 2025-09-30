@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+import '../routes/file_routes.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -17,10 +17,7 @@ class _SplashState extends State<Splash> {
 
   void _navigateToLogin() async {
     await Future.delayed(const Duration(seconds: 2));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-    );
+    Navigator.pushReplacementNamed(context, FileRoutes.login);
   }
 
   @override

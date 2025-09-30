@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'update_password_screen.dart';
+//import 'update_password_screen.dart';
+import '../services/auth_service_recover.dart';
 
 class RecoverPasswordScreen extends StatefulWidget {
   const RecoverPasswordScreen({super.key});
@@ -13,10 +14,11 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
 
   void _goToUpdatePasswordScreen() {
     if (emailController.text.isNotEmpty) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const UpdatePasswordScreen()),
-      );
+     // Navigator.push(
+      //  context, 
+        //MaterialPageRoute(builder: (context) => const UpdatePasswordScreen()),
+      //);
+      PasswordRecoveryService.sendRecoveryEmail(context: context, email: emailController.text);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

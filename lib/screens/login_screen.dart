@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'register_screen.dart';
+//import 'home_screen.dart';
+//import 'register_screen.dart';
 import 'recover_password_screen.dart';
+import '../routes/file_routes.dart';
+import '../services/auth_service_login.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,11 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _goToHome() {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MyHomePage(title: 'Inicio'),
-        ),
+      AuthService.loginUser(
+        context: context,
+        email: emailController.text,
+        password: passwordController.text,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -30,10 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _goToRegister() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const RegisterScreen()),
-    );
+    Navigator.pushNamed(context, FileRoutes.register);
   }
 
   void _goToRecoverPassword() {

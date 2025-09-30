@@ -1,7 +1,7 @@
 // lib/services/auth_service_login.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import '../routes/app_routes.dart';
+import '../routes/file_routes.dart';
 
 class AuthService {
   static Future<void> loginUser({
@@ -9,12 +9,7 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Todos los campos son obligatorios")),
-      );
-      return;
-    }
+   
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -23,11 +18,11 @@ class AuthService {
       );
 
       //print("Logueado como: ${userCredential.user?.email}");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Inicio de sesión exitoso')),
-      );
+      //ScaffoldMessenger.of(context).showSnackBar(
+       // const SnackBar(content: Text('Inicio de sesión exitoso')),
+      //);
 
-      //Navigator.pushReplacementNamed(context, AppRoutes.login);
+      Navigator.pushReplacementNamed(context, FileRoutes.home);
     } on FirebaseAuthException catch (e) {
   String message;
 
