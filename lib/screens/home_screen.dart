@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/clima.dart';
 
+
+
 void main() {
   runApp(const MyApp());
 }

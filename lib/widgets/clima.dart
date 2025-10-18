@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import '../widgets/focos.dart';
 
 class Avatar extends StatelessWidget {
   const Avatar({super.key});
@@ -291,10 +292,12 @@ class _BarraState extends State<Barra> {
                     encenderFoco(focoEncendido);
                   },
                 ),
+                Barfocos()
               ],
             ],
           ),
         ),
+        
       ],
     );
   }

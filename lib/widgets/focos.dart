@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../routes/file_routes.dart';
 
 class Barfocos extends StatefulWidget {
   const Barfocos({super.key});
@@ -165,7 +166,7 @@ class Agregar extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(40),
         child: GestureDetector(
-          onTap: onTap,
+          onTap: () => Navigator.pushNamed(context, FileRoutes.agregar),
           child: Container(
             width: size,
             height: size,
