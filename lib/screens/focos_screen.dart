@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/focos.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,8 +45,8 @@ class FocosScreen extends StatelessWidget {
       body: Column(
         // mostrar 3 focos (puedes cambiar a ListView si esperas muchos)
         children: const [
-          // no usar const si la instancia es stateful o tiene animaciones,
-          // pero si tu Barfocos tiene constructor const puedes dejarlo; por seguridad lo quito abajo.
+         Barfocos(),
+         Agregar(),
         ],
       ),
       // uso de Stack para colocar la lista de focos y el botón flotante

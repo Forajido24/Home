@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'home_screen.dart';
 //import 'register_screen.dart';
 import 'recover_password_screen.dart';
-import '../routes/file_routes.dart';
+import '../routes/file_routes.dart';//archvio de rutas
 import '../services/auth_service_login.dart';
 
 
