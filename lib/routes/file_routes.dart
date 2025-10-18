@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:hestek_v01/screens/focos_screen.dart';
 import 'package:hestek_v01/screens/home_screen.dart';
 import 'package:hestek_v01/screens/login_screen.dart';
 import 'package:hestek_v01/screens/register_screen.dart';
@@ -11,11 +12,13 @@ class FileRoutes {
   static const login = "/login";
   static const register = "/register";
   static const home= "/home";
+  static const focos= "/focos";
 
   static Map<String, WidgetBuilder> routes={
     splash: (context)=> Splash(),
     login: (context)=> LoginScreen(),
     register: (context)=> RegisterScreen(),
-    home: (context)=> Inicio()
+    home: (context)=> Inicio(),
+    focos: (context)=> FocosScreen()
   };
 }

@@ -35,6 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushNamed(context, FileRoutes.register);
   }
 
+  void _goToFocos(){
+    Navigator.pushNamed(context, FileRoutes.focos);
+  }
+
   void _goToRecoverPassword() {
     Navigator.push(
       context,
@@ -110,6 +114,8 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 10),
 
               // Botón Crear cuenta
+               
+
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -127,6 +133,23 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _goToFocos,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 38, 24, 78),
+                    foregroundColor: const Color(0xFFEAEAEA),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text('Ir a focos'),
+                ),
+              ),
+
+              const SizedBox(height: 20),
 
               // Texto: ¿Olvidaste tu contraseña?
               TextButton(
@@ -140,6 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+
+              
             ],
           ),
         ),
