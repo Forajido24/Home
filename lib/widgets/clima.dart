@@ -31,46 +31,6 @@ class Avatar extends StatelessWidget {
     );
   }
 }
-/* 
-class Cuartos extends StatelessWidget {
-  const Cuartos({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(29),
-      child: Column(
-        children: [
-          Container(
-            width: 140,
-            height: 140,
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 244, 245, 245),
-              image: DecorationImage(
-                image: AssetImage('assets/images/room.png'),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(17), //Solo se redondean las esquinas de arriba
-              ),
-            ),
-          ),
-          Container(
-            width: 140,
-            height: 60,
-            decoration: BoxDecoration(
-              color: Color(0xFFCBCECE),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(17), //Solo se redondean las esquinas de abajo
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-*/
 
 // Utiliza la API de OpenWeatherMap para obtener datos del clima basado en la ubicación del usuario
 class Clima extends StatefulWidget {
@@ -197,13 +157,38 @@ class _ClimaState extends State<Clima> {
 
 class Barra extends StatefulWidget {
   const Barra({super.key});
-
+  
   @override
   State<Barra> createState() => _BarraState();
 }
 
 class _BarraState extends State<Barra> {
   String selected = 'Cuartos';
+  bool focoEncendido = false; // Estado del foco
+  final String FOCO_IP = "http://192.168.100.173/light/kauf_bulb";
+
+  Future<void> encenderFoco(bool estado) async{
+  if (estado) {
+      if (focoEncendido);
+      try {
+        await http.post(Uri.parse("$FOCO_IP/turn_on"));
+        focoEncendido = true;
+        //return "💡 Foco encendido";
+      } catch (e) {
+        //return "Error al encender el foco:\n$e";
+      }
+    } else {
+      if (!focoEncendido);
+      try {
+        await http.post(Uri.parse("$FOCO_IP/turn_off"));
+        focoEncendido = false;
+        //return "💤 Foco apagado";
+      } catch (e) {
+        //return "Error al apagar el foco:\n$e";
+      }
+    }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -213,14 +198,15 @@ class _BarraState extends State<Barra> {
           padding: const EdgeInsets.all(16),
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xFFC0D6DF),
+              color: const Color(0xFFC0D6DF),
               borderRadius: BorderRadius.circular(20),
             ),
             child: SegmentedButton<String>(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Color(0xFFC0D6DF)),
+                backgroundColor:
+                    WidgetStateProperty.all(const Color(0xFFC0D6DF)),
                 side: WidgetStateProperty.all(
-                    BorderSide(color: Color(0xFFC0D6DF), width: 2)),
+                    const BorderSide(color: Color(0xFFC0D6DF), width: 2)),
                 shape: WidgetStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 )),
@@ -250,14 +236,53 @@ class _BarraState extends State<Barra> {
             ),
           ),
         ),
+
         // Contenido dinámico según la selección
         Padding(
           padding: const EdgeInsets.all(20),
-          child: Text(
-            selected == 'Cuartos'
-                ? 'Contenido de Cuartos'
-                : 'Contenido de Dispositivos',
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          child: Column(
+            children: [
+              Text(
+                selected == 'Cuartos'
+                    ? 'Contenido de Cuartos'
+                    : 'Control de Dispositivos',
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+
+              // Solo muestra el botón si se selecciona "Dispositivos"
+              if (selected == 'Dispositivos') ...[
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        focoEncendido ? Colors.green : const Color.fromARGB(255, 255, 7, 7),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  icon: Icon(
+                    focoEncendido ? Icons.lightbulb : Icons.lightbulb_outline,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    focoEncendido ? 'Apagar' : 'Encender',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      focoEncendido = !focoEncendido;
+                    });
+                    encenderFoco(focoEncendido);
+                  },
+                ),
+              ],
+            ],
           ),
         ),
       ],
