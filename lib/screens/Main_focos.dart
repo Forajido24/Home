@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:focos/widgets/focos.dart'; //Pendiente
+import '../widgets/focos.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,34 +8,48 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Focos Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const Focos(),
+      home: const FocosScreen(),
     );
   }
 }
 
-class Focos extends StatelessWidget {
-  const Focos({super.key});
+// Renombré la clase a FocosScreen para evitar colisiones de nombres con otros archivos
+class FocosScreen extends StatelessWidget {
+  const FocosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEAEAEA),
+      backgroundColor: const Color(0xFFEAEAEA),
       appBar: AppBar(
-        backgroundColor: Color(0xFFEAEAEA),
+        backgroundColor: const Color(0xFFEAEAEA),
         toolbarHeight: 100,
-        title: Text("Cuarto", style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),),
+        elevation: 0,
+        title: const Text(
+          "Cuarto",
+          style: TextStyle(
+            fontSize: 45,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
       ),
-      body: Column(children: const [Barfocos(), Agregar()],
+      body: Column(
+        // mostrar 3 focos (puedes cambiar a ListView si esperas muchos)
+        children: const [
+          // no usar const si la instancia es stateful o tiene animaciones,
+          // pero si tu Barfocos tiene constructor const puedes dejarlo; por seguridad lo quito abajo.
+        ],
       ),
+      // uso de Stack para colocar la lista de focos y el botón flotante
     );
   }
 }
