@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/focos.dart';
 
 void main() {
   runApp(const MyApp());

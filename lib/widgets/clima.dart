@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 
-
 class Avatar extends StatelessWidget {
   const Avatar({super.key});
 
@@ -15,53 +14,21 @@ class Avatar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                'Miembros',
-                style: TextStyle(color: Color.fromARGB(255, 128, 125, 125), fontSize: 14, fontWeight: FontWeight.bold),
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
+              'Miembros',
+              style: TextStyle(
+                color: Color.fromARGB(255, 128, 125, 125),
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
               ),
             ),
+          ),
           const CircleAvatar(
             radius: 30,
-            backgroundColor: Colors.white,
-          ),
-        ],
-      ),
-    );
-  }
-}
-/* 
-class Cuartos extends StatelessWidget {
-  const Cuartos({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(29),
-      child: Column(
-        children: [
-          Container(
-            width: 140,
-            height: 140,
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 244, 245, 245),
-              image: DecorationImage(
-                image: AssetImage('assets/images/room.png'),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(17), //Solo se redondean las esquinas de arriba
-              ),
-            ),
-          ),
-          Container(
-            width: 140,
-            height: 60,
-            decoration: BoxDecoration(
-              color: Color(0xFFCBCECE),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(17), //Solo se redondean las esquinas de abajo
-              ),
+            //backgroundColor: Colors.white,
+            backgroundImage: NetworkImage(
+              'https://i.pinimg.com/originals/ba/8b/6b/ba8b6b7ef1b0911725f39851b94a1b7d.jpg',
             ),
           ),
         ],
@@ -69,7 +36,6 @@ class Cuartos extends StatelessWidget {
     );
   }
 }
-*/
 
 // Utiliza la API de OpenWeatherMap para obtener datos del clima basado en la ubicación del usuario
 class Clima extends StatefulWidget {
@@ -78,6 +44,7 @@ class Clima extends StatefulWidget {
   @override
   State<Clima> createState() => _ClimaState();
 }
+
 // Clase que maneja el estado del widget Clima
 class _ClimaState extends State<Clima> {
   final String apiKey = '5dc860a75368d2af54e081aa6524db38'; //API Key
@@ -135,6 +102,7 @@ class _ClimaState extends State<Clima> {
       });
     }
   }
+
   // Widget que construye la interfaz del clima
   // Muestra la ciudad, descripción del clima y temperatura en un contenedor estilizado
   @override
@@ -146,26 +114,22 @@ class _ClimaState extends State<Clima> {
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFFE8DAB2),
-            Color(0XFFDD6E42),
-          ],
+          colors: [Color(0xFFE8DAB2), Color(0XFFDD6E42)],
         ),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            offset: Offset(2, 4),
-          )
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(2, 4)),
         ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            const SizedBox(width: 50),
-            const Icon(Icons.wb_cloudy,
-                size: 48, color: Color.fromARGB(255, 78, 116, 243)),
+            const SizedBox(width: 15),
+            const Icon(
+              Icons.wb_cloudy,
+              size: 48,
+              color: Color.fromARGB(255, 78, 116, 243),
+            ),
             const SizedBox(width: 35),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,10 +144,7 @@ class _ClimaState extends State<Clima> {
                 ),
                 Text(
                   "$descripcion · ${temperatura.toStringAsFixed(1)}°C",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
-                  ),
+                  style: const TextStyle(fontSize: 10, color: Colors.white70),
                 ),
               ],
             ),
@@ -203,6 +164,30 @@ class Barra extends StatefulWidget {
 
 class _BarraState extends State<Barra> {
   String selected = 'Cuartos';
+  bool focoEncendido = false; // Estado del foco
+  final String FOCO_IP = "http://192.168.100.173/light/kauf_bulb";
+
+  Future<void> encenderFoco(bool estado) async {
+    if (estado) {
+      if (focoEncendido) {}
+      try {
+        await http.post(Uri.parse("$FOCO_IP/turn_on"));
+        focoEncendido = true;
+        //return "💡 Foco encendido";
+      } catch (e) {
+        //return "Error al encender el foco:\n$e";
+      }
+    } else {
+      if (!focoEncendido) {}
+      try {
+        await http.post(Uri.parse("$FOCO_IP/turn_off"));
+        focoEncendido = false;
+        //return "💤 Foco apagado";
+      } catch (e) {
+        //return "Error al apagar el foco:\n$e";
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,17 +197,22 @@ class _BarraState extends State<Barra> {
           padding: const EdgeInsets.all(16),
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xFFC0D6DF),
+              color: const Color(0xFFC0D6DF),
               borderRadius: BorderRadius.circular(20),
             ),
             child: SegmentedButton<String>(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Color(0xFFC0D6DF)),
+                backgroundColor: WidgetStateProperty.all(
+                  const Color(0xFFC0D6DF),
+                ),
                 side: WidgetStateProperty.all(
-                    BorderSide(color: Color(0xFFC0D6DF), width: 2)),
-                shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                )),
+                  const BorderSide(color: Color(0xFFC0D6DF), width: 2),
+                ),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
               ),
               segments: const [
                 ButtonSegment(
@@ -249,14 +239,60 @@ class _BarraState extends State<Barra> {
             ),
           ),
         ),
+
         // Contenido dinámico según la selección
         Padding(
           padding: const EdgeInsets.all(20),
-          child: Text(
-            selected == 'Cuartos'
-                ? 'Contenido de Cuartos'
-                : 'Contenido de Dispositivos',
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          child: Column(
+            children: [
+              Text(
+                selected == 'Cuartos'
+                    ? 'Contenido de Cuartos'
+                    : 'Control de Dispositivos',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              // Solo muestra el botón si se selecciona "Dispositivos"
+              if (selected == 'Dispositivos') ...[
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        focoEncendido
+                            ? Colors.green
+                            : const Color.fromARGB(255, 255, 7, 7),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  icon: Icon(
+                    focoEncendido ? Icons.lightbulb : Icons.lightbulb_outline,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    focoEncendido ? 'Apagar' : 'Encender',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      focoEncendido = !focoEncendido;
+                    });
+                    encenderFoco(focoEncendido);
+                  },
+                ),
+              ],
+            ],
           ),
         ),
       ],

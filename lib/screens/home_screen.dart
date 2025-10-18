@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/widgets/clima.dart';
+import '../widgets/clima.dart';
 
 void main() {
   runApp(const MyApp());

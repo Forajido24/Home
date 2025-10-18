@@ -1,6 +1,6 @@
 // import'lib/services/auth_service_register.dart'
 import 'package:firebase_auth/firebase_auth.dart';
-//import '../routes/app_routes.dart';
+import '../routes/file_routes.dart';
 import 'package:flutter/material.dart'; 
 
 
@@ -10,23 +10,23 @@ class AuthServiceRegistro  {
       required BuildContext context,
       required String email,
       required String pass,
-      required String confirmPass,
+      //required String confirmPass,
 
     }) async{
 
-    if (email.isEmpty || pass.isEmpty || confirmPass.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Todos los campos son obligatorios")),
-      );
-      return;
-    }
+    //if (email.isEmpty || pass.isEmpty || confirmPass.isEmpty) {
+      //ScaffoldMessenger.of(context).showSnackBar(
+        //const SnackBar(content: Text("Todos los campos son obligatorios")),
+      //);
+      //return;
+   // }
 
-    if (pass != confirmPass) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Las contraseñas no coinciden")),
-      );
-      return;
-    }
+    //if (pass != confirmPass) {
+    //  ScaffoldMessenger.of(context).showSnackBar(
+     //   const SnackBar(content: Text("Las contraseñas no coinciden")),
+      //);
+      //return;
+   // }
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -37,7 +37,7 @@ class AuthServiceRegistro  {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Cuenta creada correctamente")),
       );
-
+      Navigator.pushReplacementNamed(context, FileRoutes.login);
       //Navigator.pop(context); // ← volver al login
       //Navigator.pushReplacementNamed(context, AppRoutes.login);
     } on FirebaseAuthException catch (e) {
