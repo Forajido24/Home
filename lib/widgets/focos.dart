@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../routes/file_routes.dart';
+import '../services/foco_service.dart';
 
 class Barfocos extends StatefulWidget {
   const Barfocos({super.key});
@@ -9,9 +10,11 @@ class Barfocos extends StatefulWidget {
 }
 
 class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
-  bool isOn = false; // Estado: foco encendido o apagado
+  bool isOn = false; // Estado del foco
+  bool _cargando = false; // Para bloquear interacción mientras se hace la petición
   late AnimationController _controller;
   late Animation<double> _glowAnimation;
+  final FocoService _focoService = FocoService();
 
   @override
   void initState() {
@@ -20,12 +23,9 @@ class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-
-    // Animación para el "brillo" del foco
-    _glowAnimation = Tween<double>(
-      begin: 0.4,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _glowAnimation = Tween<double>(begin: 0.4, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -34,37 +34,52 @@ class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  void _toggle(bool value) {
-    setState(() {
-      isOn = value;
-      if (isOn) {
-        _controller.forward(); // Inicia la animación de brillo
-      } else {
-        _controller.reverse(); // Apaga el brillo
-      }
-    });
+  Future<void> _toggle(bool value) async {
+    if (_cargando) return;
+
+    setState(() => _cargando = true);
+
+    try {
+      await _focoService.cambiarEstado(value);
+
+      setState(() {
+        isOn = value;
+        if (isOn) {
+          _controller.forward();
+        } else {
+          _controller.reverse();
+        }
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al cambiar el foco: $e')),
+      );
+    } finally {
+      setState(() => _cargando = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragUpdate: (details) {
-        if (details.delta.dx > 0) {
-          _toggle(true); // Encender
-        } else if (details.delta.dx < 0) {
-          _toggle(false); // Apagar
-        }
-      },
+      onHorizontalDragUpdate: _cargando
+          ? null
+          : (details) {
+              if (details.delta.dx > 0) {
+                _toggle(true);
+              } else if (details.delta.dx < 0) {
+                _toggle(false);
+              }
+            },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
         height: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           gradient: LinearGradient(
-            colors:
-                isOn
-                    ? [const Color(0xFF4F6D7A), const Color(0xFF00B2FF)]
-                    : [const Color(0xFFB0B0B0), const Color(0xFF707070)],
+            colors: isOn
+                ? [const Color(0xFF4F6D7A), const Color(0xFF00B2FF)]
+                : [const Color(0xFFB0B0B0), const Color(0xFF707070)],
           ),
           boxShadow: const [
             BoxShadow(
@@ -76,7 +91,7 @@ class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
         ),
         child: Stack(
           children: [
-            // Icono del foco animado
+            // Icono animado del foco
             Positioned(
               left: 20,
               top: 16,
@@ -86,10 +101,9 @@ class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
                   return Icon(
                     Icons.lightbulb,
                     size: 48,
-                    color:
-                        isOn
-                            ? Colors.yellow.withOpacity(_glowAnimation.value)
-                            : Colors.grey[400],
+                    color: isOn
+                        ? Colors.yellow.withOpacity(_glowAnimation.value)
+                        : Colors.grey[400],
                   );
                 },
               ),
@@ -97,7 +111,7 @@ class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
 
             // Texto de estado
             Positioned(
-              left: 90,
+              left: 75,
               top: 26,
               child: Text(
                 isOn ? "Encendido" : "Apagado",
@@ -109,7 +123,7 @@ class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
               ),
             ),
 
-            // Círculo deslizante con animación
+            // Círculo deslizante con indicador de carga
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
               right: isOn ? 10 : null,
@@ -122,25 +136,32 @@ class _FocoState extends State<Barfocos> with SingleTickerProviderStateMixin {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors:
-                        isOn
-                            ? [const Color(0xFFA9DCF2), const Color(0xFF00B2FF)]
-                            : [
-                              const Color(0xFF808080),
-                              const Color(0xFFB0B0B0),
-                            ],
+                    colors: isOn
+                        ? [const Color(0xFFA9DCF2), const Color(0xFF00B2FF)]
+                        : [const Color(0xFF808080), const Color(0xFFB0B0B0)],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color:
-                          isOn
-                              ? Colors.blueAccent.withOpacity(0.5)
-                              : Colors.black26,
+                      color: isOn
+                          ? Colors.blueAccent.withOpacity(0.5)
+                          : Colors.black26,
                       blurRadius: 8,
                       offset: const Offset(2, 4),
                     ),
                   ],
                 ),
+                child: _cargando
+                    ? const Center(
+                        child: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      )
+                    : null,
               ),
             ),
           ],
@@ -164,7 +185,7 @@ class Agregar extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: const EdgeInsets.all(40),
+        padding: const EdgeInsets.all(10),
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(context, FileRoutes.agregar),
           child: Container(

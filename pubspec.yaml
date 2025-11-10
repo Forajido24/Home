@@ -23,3 +23,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/logo.png
+    - assets/caballero_foco.jpeg
+    - assets/chambeador_foco.jpeg
+    - assets/bailerina_foco.jpeg
+    - assets/detective_foco.jpeg
+    - assets/nerd_foco.jpeg
+    - assets/super_foco.jpeg
+    - assets/agregar_foco.png
+    - assets/agregar_foco2.png
+    - assets/foco_guardado.png
+

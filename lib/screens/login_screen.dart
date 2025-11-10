@@ -34,11 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
   void _goToRegister() {
     Navigator.pushNamed(context, FileRoutes.register);
   }
-
+/*
   void _goToFocos(){
     Navigator.pushNamed(context, FileRoutes.focos);
   }
-
+*/
   void _goToRecoverPassword() {
     Navigator.push(
       context,
@@ -133,6 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 20),
+              /*
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -149,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 20),*/
 
               // Texto: ¿Olvidaste tu contraseña?
               TextButton(

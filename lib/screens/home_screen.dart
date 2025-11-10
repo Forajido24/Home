@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/clima.dart';
+import '../widgets/avatar.dart';
+import '../widgets/Barra_options.dart';
 
 
 
@@ -36,7 +38,7 @@ class Inicio extends StatelessWidget {
         toolbarHeight: 100,
         title: Text("Casa", style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),),
       ),
-      body: Column(children: const [Avatar(), Clima(), Barra()],),
+      body: Column(children: [Avatar(), Clima(), Barra()],),
       bottomNavigationBar: BottomAppBar(
       color: Color(0xFFEAEAEA),
       child: Row(

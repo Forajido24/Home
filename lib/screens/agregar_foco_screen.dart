@@ -62,7 +62,7 @@ class _AgregarScreenState extends State<AgregarScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/logo.png', height: 120),
+              Image.asset('assets/agregar_foco.png', height: 240, width: 240),
               const SizedBox(height: 20),
               //buildTextField(label: 'User', controller: usernameController),
               buildTextField(label: 'IP del foco', controller: focoIpController),
